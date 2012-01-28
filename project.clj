@@ -7,4 +7,5 @@
   :dev-dependencies [[lein-ring "0.5.4"]
                      [clj-stacktrace "0.2.4"]]
   :ring {:handler math.core/app}
+  :extra-classpath-dirs [~(str (.toURI (java.io.File. "grinder/lib/*")))]
 )
