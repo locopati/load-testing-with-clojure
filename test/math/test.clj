@@ -1,10 +1,10 @@
 (ns math.test
-  (:use math.core)
-  (:use ring.adapter.jetty)
-  (:use [clj-http.util :only [url-encode url-decode]])
-  (:use clojure.test)
-  (:require [clj-http.client :as http])
-  (:require [clojure.string :as str])
+  (:use math.core
+        ring.adapter.jetty
+        [clj-http.util :only [url-encode url-decode]]
+        clojure.test)
+  (:require [clj-http.client :as http]
+            [clojure.string :as str])
   )
 
 (def portnum 9999)
@@ -14,12 +14,15 @@
 (def unary-functions ['sin 'cos 'tan 'sq 'sqrt])
 
 (defn random-operation []
-  (let [a (rand-int 1000000)
-        b (rand-int 1000000)
+  (let [a (rand-int 1000)
+        b (rand-int 1000)
         op (rand-nth binary-functions)]
     (str/join " " (map str [a op b]))))
 
-(defn build-url [op-str]
+(defn build-url
+  "url-encode is designed for query strings and replaces spaces by pluses - 
+for url paths however, spaces must be %20"
+  [op-str]
   (str url (str/replace (url-encode op-str) #"\+" "%20")))
 
 (defn test-operation []

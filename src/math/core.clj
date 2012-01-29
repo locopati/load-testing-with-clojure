@@ -1,10 +1,10 @@
 (ns math.core
-	(:use clojure.set) ; needed by incanter.core?
-	(:use compojure.core)
-        (:use incanter.core)
-        (:use [clj-http.util :only [url-decode]])
-	(:require [compojure.route :as route]
-		  [compojure.handler :as handler])
+  (:use clojure.set
+	compojure.core
+        incanter.core
+        [clj-http.util :only [url-decode]])
+  (:require [compojure.route :as route]
+            [compojure.handler :as handler])
 )
 
 (defn eval-math [expr-str]
