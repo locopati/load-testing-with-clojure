@@ -1,5 +1,5 @@
 ;;
-;; Using HTTP with The Grinder
+;; Instrumenting HTTP with The Grinder
 ;;
 
 (ns math.http
@@ -33,7 +33,7 @@
     (fn []
 
       ;; request using a recorded function
-      (instrumented-get (build-url (random-operation)))
+      (instrumented-get (build-url (random-operation)))     
 
       ) ;; end of test runner function
     ) ;; end of factory function

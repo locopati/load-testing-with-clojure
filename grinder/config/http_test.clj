@@ -1,5 +1,5 @@
 ;;
-;; Using HTTP with The Grinder
+;; Recoding HTTP with The Grinder
 ;;
 
 (ns math.http
