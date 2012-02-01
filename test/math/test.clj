@@ -12,6 +12,10 @@
 
 (def binary-functions ['+ '- '* '/])
 
+(def err-status
+  (concat (map #(+ 400 %) (range 19))
+          (map #(+ 500 %) (range 10))))
+
 (declare random-operation)
 
 (defn num-or-op [rand-fn]
@@ -39,8 +43,14 @@ for url paths however, spaces must be %20"
   (let [op-str (random-operation)]
     (is (= (-> op-str
                (build-url)
-               (http/get {:throw-exception false})
+               (http/get {:throw-exceptions false})
                (:body))
            (str (eval-math op-str))))))
+
+(defn test-error []
+  (is (< (:status (http/get
+                   (str url "/err/" (rand-nth err-status))
+                   {:throw-exceptions false}))
+         400)))
 
 ;;(run-jetty main-routes {:port portnum})
