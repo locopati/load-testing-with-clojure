@@ -4,7 +4,7 @@
               incanter.core
               ring.middleware.bounce-favicon)
 	(:require [compojure.route :as route]
-		  			[compojure.handler :as handler])
+                  [compojure.handler :as handler])
 )
 
 (defn eval-math [expr-str]
