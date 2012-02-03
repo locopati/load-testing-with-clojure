@@ -5,6 +5,7 @@
 /native
 /.lein-failures
 /.lein-deps-sum
+/.lein-git-deps
 /*-file-store
 *~
 /pom.xml
