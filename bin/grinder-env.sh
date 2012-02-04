@@ -1,9 +1,0 @@
-GRINDER_CONFIG=grinder/config
-GRINDER_DATA=EmbeddedVideosController.csv
-GRINDER_LOG=grinder/log
-GRINDER_PID=$GRINDER_LOG/agent.pid
-CLASSPATH=`lein classpath`:$CLASSPATH
-
-export CLASSPATH GRINDER_CONFIG GRINDER_DATA GRINDER_LOG
-
-mkdir -p $GRINDER_LOG

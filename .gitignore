@@ -8,4 +8,6 @@
 /.lein-git-deps
 /*-file-store
 *~
+.#*
+\#*
 /pom.xml
