@@ -2,28 +2,9 @@ WHAT IS THE STORY?
 here is a flexible tool that can simplify your load testing
 
 TODO
-* setup grinder in project
-* baseline properties for agent
 * demo scripts
-  * HTTP wo instrumentation
-  * HTTP w instrumentation
-  * custom reporting/logging
-  * custom stats
+  * working with clojure.test
   * parallelizing
   * distributing
 * micro instances
 
-TALK
-* who am i? how did i get here?
-* goal
-  * walkthrough field-tested scenario
-  * pointers to further exploration
-* math server
-* grinder basics
-  * agent
-  * console
-  * properties
-  * scripts
-* demo scripts
-* pallet
-* ?avout?

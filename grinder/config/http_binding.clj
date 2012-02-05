@@ -1,5 +1,5 @@
 ;;
-;; Rebinding HTTP with The Grinder
+;; Using clojure.test with The Grinder
 ;;
 
 (ns math.http
@@ -9,32 +9,39 @@
   (:require [clj-http.client :as http])
   )
   
-;; declare symbols used by the script
 (let [grinder Grinder/grinder
-      test (Test. 1 "HTTP")]
+      stats (.getStatistics grinder)
+      test (Test. 1 "clojure.test")]
 
-  ;; utility function for logging
   (defn log [& text]
     (.. grinder (getLogger) (output (apply str text))))
 
-  ;; function that we can record
-  (defn instrumented-get [url]
-    (.. (HTTPRequest.) (GET url)))
+  ;; if testing reports an error, let the grinder know about it
+  (defn report [event]
+    (when-not (= (:type event) :pass)
+      (log event)
+      (.. stats getForLastTest (setSuccess false))))
+
+  ;; the arity of the instrumented fn changes to match the rebound fn
+  ;; the return value of HTTPRequest must be converted as well
+  (defn instrumented-get [url & _]    
+    {:body (.. (HTTPRequest.) (GET url) getText)})
   
-  ;; record calls to the get function
   (.. test (record instrumented-get))
   
-  ;; the factory function
-  ;; called once by each worker thread
   (fn []
  
-    ;; the test runner function
-    ;; called on each run
     (fn []
 
-      ;; request using a recorded function
-      (instrumented-get (build-url (random-operation)))     
+      ;; rebind the http/get fn to our instrumented fn
+      ;; rebind test reporting to capture errors
+      (binding [wrapped-get instrumented-get
+                clojure.test/report report
+                ]
+        (.setDelayReports stats true)
+        (test-operation)
+        (test-error))
 
-      ) ;; end of test runner function
-    ) ;; end of factory function
-  ) ;; end of script let form
+      )
+    )
+  )

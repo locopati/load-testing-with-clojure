@@ -9,11 +9,9 @@
   (:require [clj-http.client :as http])
   )
   
-;; declare symbols used by the script
 (let [grinder Grinder/grinder
       test (Test. 1 "HTTP")]
 
-  ;; utility function for logging
   (defn log [& text]
     (.. grinder (getLogger) (output (apply str text))))
 
@@ -21,20 +19,20 @@
   (defn instrumented-get [url]
     (.. (HTTPRequest.) (GET url)))
   
-  ;; record calls to the get function
+  ;; record calls to the instrumented function
   (.. test (record instrumented-get))
   
-  ;; the factory function
-  ;; called once by each worker thread
   (fn []
  
-    ;; the test runner function
-    ;; called on each run
     (fn []
 
       ;; request using a recorded function
-      (instrumented-get (build-url (random-operation)))     
+      (instrumented-get (build-url (random-expr)))
 
-      ) ;; end of test runner function
-    ) ;; end of factory function
-  ) ;; end of script let form
+      ;; request errors
+      (instrumented-get (build-url "/err/401"))
+      (instrumented-get (build-url "/err/500"))
+      
+      )
+    )
+  )

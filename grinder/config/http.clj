@@ -24,7 +24,7 @@
     (fn []
 
       ;; log the output of a random math request
-      (let [op (random-operation)]    
+      (let [op (random-expr)]    
         (log op " = " (:body (http/get (build-url op)))))
 
       ) ;; end of test runner function
