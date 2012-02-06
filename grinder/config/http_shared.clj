@@ -1,5 +1,5 @@
 ;;
-;; Custom statistics with The Grinder
+;; Sharing tests across threads with The Grinder
 ;;
 
 (ns math.http
@@ -28,25 +28,10 @@
 
   (.. test (record instrumented-get))
 
-  (defn register-stat [idx op]
-    ;; grinder seems to have a problem
-    ;; using '* without a leading space
-    ;; and using '/ without a trailing space
-    (.. stats (registerDataLogExpression
-               (str " " op " ") (str "userLong" idx)))
-    (.. stats (registerSummaryExpression
-               (str " " op " ") (str "userLong" idx))))
-
-  (defn record-stat [expr idx op]
-    (.. stats getForLastTest
-        (setLong (str "userLong" idx) (count-op op expr))))
-
-  ;; register stats for counting operations
-  (register-stat 0 '+)
-  (register-stat 1 '-)
-  (register-stat 2 '*)
-  (register-stat 3 '/)
-    
+  ;; create multiple tests
+  ;; share among threads using atom
+  ;; show custom property to switch behaviors
+  
   (fn []
     
     (fn []
@@ -60,10 +45,7 @@
         (instrumented-get expr)
         
         ;; record the stats
-        (record-stat expr 0 '+)
-        (record-stat expr 1 '-)
-        (record-stat expr 2 '*)
-        (record-stat expr 3 '/)
+        (map-indexed (partial record-stat expr) ops)
         
         )
       )
