@@ -41,10 +41,12 @@
 (defn ^:dynamic wrapped-get
   "Allows dynamic rebinding of http/get requests"
   [& args]
+  (println "wrapped " args)
   (apply http/get args))
 
 (defn test-operation []
   (let [op-str (random-expr)]
+    (println "testing " op-str)
     (is (= (-> op-str
                (build-url)
                (wrapped-get {:throw-exceptions false})

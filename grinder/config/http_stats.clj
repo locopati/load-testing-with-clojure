@@ -10,7 +10,7 @@
   )
   
 (let [grinder Grinder/grinder
-      stats (.getStatistics grinder) ;; define stats here for easier referencing
+      stats (.getStatistics grinder) 
       test (Test. 1 "Custom Stats")]
 
   (defn log [& text]

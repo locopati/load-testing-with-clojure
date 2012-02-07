@@ -10,43 +10,61 @@
   )
   
 (let [grinder Grinder/grinder
-      stats (.getStatistics grinder) ;; define stats here for easier referencing
+      stats (.getStatistics grinder)
+      ;; here we use a custom property to indicate sharing among threads
+      shared? (.. grinder getProperties (getBoolean "grinder.shared" false))
       test (Test. 1 "Custom Stats")]
 
   (defn log [& text]
     (.. grinder (getLogger) (output (apply str text))))
 
-  ;; utility to return the number operations op in a mathematical expression expr
-  (defn count-op [op expr]
-    (count (re-seq (re-pattern (str "\\" op)) expr)))
-  
-  (defn instrumented-get [expr]
-    ;; use getForCurrentTest when recording stats within an instrumented function
-    ;;(.. stats getForCurrentTest (setLong "userLong0" (count-op '+ expr)))
-    ;;(.. stats getForCurrentTest (setLong "userLong1" (count-op '- expr)))
-    (.. (HTTPRequest.) (GET (build-url expr))))
+  ;; again the arity must match the rebound fn
+  ;; and the return value converted
+  (defn instrumented-get [url & _]
+    (println "instrumented " url)
+    {:body (.. (HTTPRequest.) (GET url) getText)})
 
   (.. test (record instrumented-get))
 
-  ;; create multiple tests
-  ;; share among threads using atom
-  ;; show custom property to switch behaviors
+  (defn next-test [{_ :test-fn remaining :tests}]
+    {:test-fn (first remaining) :tests (rest remaining)})
   
+  (defn shared-tests [test-atom]
+    (loop [{current-test :test-fn remaining-tests :tests}
+           (swap! test-atom next-test)]
+      (if (empty? remaining-tests)
+        nil
+        (do (current-test)
+            (recur (swap! test-atom next-test))))))
+
   (fn []
+
+    (println "worker")
     
     (fn []
-          
+
+      (println "run")
+      
       ;; request using a recorded function
-      (let [expr (random-expr)]
+      (binding [wrapped-get instrumented-get]
+        (println "binding")
+        (let [test-atom (atom {:test-fn nil
+                               :tests (repeat 100 test-operation)})]
+          (println "let")
+          (println test-atom)
+          (println @test-atom)
+          (println (count (:tests @test-atom)))
+          
+          (if shared?
+            (shared-tests test-atom)
+            (do (println "not shared")
+                ;; this does not work
+                (map #(%) (:tests @test-atom))
+                ;; this does
+                ((first (:tests @test-atom)))))
+          
         
-        ;; prevent reporting until after the test is called
-        (.. stats (setDelayReports true))
-        
-        (instrumented-get expr)
-        
-        ;; record the stats
-        (map-indexed (partial record-stat expr) ops)
-        
+          )
         )
       )
     )

@@ -36,8 +36,8 @@
       ;; rebind the http/get fn to our instrumented fn
       ;; rebind test reporting to capture errors
       (binding [wrapped-get instrumented-get
-                clojure.test/report report
-                ]
+                clojure.test/report report]
+        ;; delay grinder reporting for test reporting to work
         (.setDelayReports stats true)
         (test-operation)
         (test-error))
