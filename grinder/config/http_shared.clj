@@ -13,7 +13,9 @@
       stats (.getStatistics grinder)
       ;; here we use a custom property to indicate sharing among threads
       shared? (.. grinder getProperties (getBoolean "grinder.shared" false))
-      test (Test. 1 "Custom Stats")]
+      test (Test. 1 "Custom Stats")
+      ;; here we declare an atom for sharing among threads
+      test-atom (atom {:test-fn nil :tests (repeat 100 test-operation)})]
 
   (defn log [& text]
     (.. grinder (getLogger) (output (apply str text))))
@@ -21,50 +23,34 @@
   ;; again the arity must match the rebound fn
   ;; and the return value converted
   (defn instrumented-get [url & _]
-    (println "instrumented " url)
     {:body (.. (HTTPRequest.) (GET url) getText)})
 
   (.. test (record instrumented-get))
 
+  ;; a swapping function to setup 
   (defn next-test [{_ :test-fn remaining :tests}]
     {:test-fn (first remaining) :tests (rest remaining)})
-  
+
+  ;; 
   (defn shared-tests [test-atom]
     (loop [{current-test :test-fn remaining-tests :tests}
            (swap! test-atom next-test)]
-      (if (empty? remaining-tests)
+      (if (and (empty? remaining-tests) (nil? current-test))
         nil
-        (do (current-test)
+        (do (when-not (nil? current-test) (current-test))
             (recur (swap! test-atom next-test))))))
 
   (fn []
 
-    (println "worker")
-    
     (fn []
 
-      (println "run")
-      
       ;; request using a recorded function
       (binding [wrapped-get instrumented-get]
-        (println "binding")
-        (let [test-atom (atom {:test-fn nil
-                               :tests (repeat 100 test-operation)})]
-          (println "let")
-          (println test-atom)
-          (println @test-atom)
-          (println (count (:tests @test-atom)))
-          
+
           (if shared?
             (shared-tests test-atom)
-            (do (println "not shared")
-                ;; this does not work
-                (map #(%) (:tests @test-atom))
-                ;; this does
-                ((first (:tests @test-atom)))))
-          
+            (doall (map #(%) (:tests @test-atom))))
         
-          )
         )
       )
     )
