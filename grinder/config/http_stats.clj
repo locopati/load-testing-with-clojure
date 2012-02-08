@@ -14,7 +14,7 @@
       test (Test. 1 "Custom Stats")]
 
   (defn log [& text]
-    (.. grinder (getLogger) (output (apply str text))))
+    (.. grinder (getLogger) (info (apply str text))))
 
   ;; utility to return the number operations op in a mathematical expression expr
   (defn count-op [op expr]

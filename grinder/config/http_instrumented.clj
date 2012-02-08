@@ -13,7 +13,7 @@
       test (Test. 1 "HTTP")]
 
   (defn log [& text]
-    (.. grinder (getLogger) (output (apply str text))))
+    (.. grinder (getLogger) (info (apply str text))))
 
   ;; function that we can record
   (defn instrumented-get [url]

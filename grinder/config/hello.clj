@@ -9,7 +9,7 @@
 
   ;; utility function for logging
   (defn log [& text]
-    (.. grinder (getLogger) (output (apply str text))))
+    (.. grinder (getLogger) (info (apply str text))))
   
   ;; the factory function
   ;; called once by each worker thread

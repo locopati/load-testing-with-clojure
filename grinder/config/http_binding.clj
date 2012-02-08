@@ -14,7 +14,7 @@
       test (Test. 1 "clojure.test")]
 
   (defn log [& text]
-    (.. grinder (getLogger) (output (apply str text))))
+    (.. grinder (getLogger) (info (apply str text))))
 
   ;; if testing reports an error, let the grinder know about it
   (defn report [event]

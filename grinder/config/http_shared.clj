@@ -18,7 +18,7 @@
       test-atom (atom {:test-fn nil :tests (repeat 100 test-operation)})]
 
   (defn log [& text]
-    (.. grinder (getLogger) (output (apply str text))))
+    (.. grinder (getLogger) (info (apply str text))))
 
   ;; again the arity must match the rebound fn
   ;; and the return value converted

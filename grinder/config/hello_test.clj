@@ -10,7 +10,7 @@
 
   ;; utility function for logging
   (defn log [& text]
-    (.. grinder (getLogger) (output (apply str text))))
+    (.. grinder (getLogger) (info (apply str text))))
 
   ;; record calls to the logging function
   (.. test (record log))
