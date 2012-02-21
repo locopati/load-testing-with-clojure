@@ -1,0 +1,11 @@
+WHAT IS THE STORY?
+here is a flexible tool that can simplify your load testing
+
+TODO
+* converge agent instances
+* crate for lein on instance
+* pull project (or rsync to instance)
+* start agent
+* converge relay instance
+* converge data instance for avout
+
