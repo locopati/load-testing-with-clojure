@@ -1,10 +1,10 @@
 /checkouts
 /classes
-/lib
+*/lib
 /log
 /native
 /.lein-failures
-/.lein-deps-sum
+*/.lein-deps-sum
 /.lein-git-deps
 /*-file-store
 *~
