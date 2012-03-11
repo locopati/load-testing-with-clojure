@@ -11,7 +11,7 @@
   
 (let [grinder Grinder/grinder
       stats (.getStatistics grinder) 
-      test (Test. 1 "Custom Stats")]
+      test (Test. 4 "Custom Stats")]
 
   (defn log [& text]
     (.. grinder (getLogger) (info (apply str text))))
@@ -23,7 +23,6 @@
   (defn instrumented-get [expr]
     ;; use getForCurrentTest when recording stats within an instrumented function
     ;;(.. stats getForCurrentTest (setLong "userLong0" (count-op '+ expr)))
-    ;;(.. stats getForCurrentTest (setLong "userLong1" (count-op '- expr)))
     (.. (HTTPRequest.) (GET (build-url expr))))
 
   (.. test (record instrumented-get))

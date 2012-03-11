@@ -9,7 +9,7 @@
   )
   
 (let [grinder Grinder/grinder
-      test (Test. 1 "HTTP")]
+      test (Test. 2 "HTTP")]
 
   (defn log [& text]
     (.. grinder (getLogger) (info (apply str text))))

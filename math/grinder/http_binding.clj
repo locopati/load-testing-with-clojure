@@ -1,5 +1,5 @@
 ;;
-;; Using clojure.test with The Grinder
+;; Using rebinding and reporting with The Grinder
 ;;
 
 (ns math.http
@@ -11,7 +11,7 @@
   
 (let [grinder Grinder/grinder
       stats (.getStatistics grinder)
-      test (Test. 1 "clojure.test")]
+      test (Test. 5 "Rebinding and reporting")]
 
   (defn log [& text]
     (.. grinder (getLogger) (info (apply str text))))
