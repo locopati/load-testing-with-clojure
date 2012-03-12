@@ -1,0 +1,74 @@
+<configuration scan="true" scanPeriod="1 seconds" debug="false">
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="COMPUTEFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>log/jclouds-compute.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>log/old/jclouds-compute.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>3</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="WIREFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>log/jclouds-wire.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>log/old/jclouds-wire.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>3</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="PALLETFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>log/pallet.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>log/old/pallet.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>3</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%date %level [%thread] %logger{10} %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="jclouds.headers" level="DEBUG">
+    <appender-ref ref="WIREFILE" />
+  </logger>
+
+  <logger name="jclouds.wire" level="DEBUG">
+    <appender-ref ref="WIREFILE" />
+  </logger>
+
+  <logger name="jclouds.compute" level="DEBUG">
+    <appender-ref ref="COMPUTEFILE" />
+  </logger>
+
+  <logger name="jclouds.ssh" level="TRACE">
+    <appender-ref ref="COMPUTEFILE" />
+  </logger>
+
+  <logger name="clj-ssh.ssh" level="TRACE">
+    <appender-ref ref="COMPUTEFILE" />
+  </logger>
+
+  <logger name="pallet" level="DEBUG">
+    <appender-ref ref="PALLETFILE" />
+  </logger>
+
+<!--
+  <root level="INFO">
+    <appender-ref ref="CONSOLE" />
+  </root>
+-->
+
+  <!-- <logger name="pallet.action-plan" level="TRACE"/> -->
+  <!-- <logger name="pallet.execute.default-executor" level="TRACE"/> -->
+
+</configuration>
