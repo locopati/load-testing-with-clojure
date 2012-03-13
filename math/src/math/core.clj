@@ -13,9 +13,7 @@
 
 (defroutes handler
   (GET "/:expr" [expr] (pr-str (eval-math expr)))
-  (GET "/err/:status" [status] {:status (Integer. status)})
-  (route/not-found "<h1>404 Page Not Found</h1>")
-)
+  (GET "/err/:status" [status] {:status (Integer. status)}))
 
 (def app
   (-> #'handler

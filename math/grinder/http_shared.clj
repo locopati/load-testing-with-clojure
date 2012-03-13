@@ -15,7 +15,7 @@
       shared? (.. grinder getProperties (getBoolean "grinder.shared" false))
       test (Test. 6 "Sharing across threads")
       ;; here we declare an atom for sharing among threads
-      test-atom (atom {:test-fn nil :tests (repeat 1000 test-operation)})]
+      test-atom (atom {:test-fn nil :tests (repeat 100 test-operation)})]
 
   (defn log [& text]
     (.. grinder (getLogger) (info (apply str text))))

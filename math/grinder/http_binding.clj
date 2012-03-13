@@ -24,8 +24,10 @@
 
   ;; the arity of the instrumented fn changes to match the rebound fn
   ;; the return value of HTTPRequest must be converted as well
-  (defn instrumented-get [url & _]    
-    {:body (.. (HTTPRequest.) (GET url) getText)})
+  (defn instrumented-get [url & _]
+    (let [resp (.. (HTTPRequest.) (GET url))]
+      {:body (.getText resp)
+       :status (.getStatusCode resp)}))
   
   (.. test (record instrumented-get))
   
