@@ -78,7 +78,7 @@
 </node>
 </node>
 </node>
-<node BACKGROUND_COLOR="#ffffff" COLOR="#000000" CREATED="1331865352046" FOLDED="true" ID="ID_1848443770" MODIFIED="1331902807560" POSITION="right" STYLE="fork" TEXT="Running tests">
+<node BACKGROUND_COLOR="#ffffff" COLOR="#000000" CREATED="1331865352046" FOLDED="true" ID="ID_1848443770" MODIFIED="1331908137412" POSITION="right" STYLE="fork" TEXT="Running tests">
 <edge COLOR="#808080" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="monofur" SIZE="12"/>
 <node BACKGROUND_COLOR="#ffffff" COLOR="#000000" CREATED="1331865525631" FOLDED="true" ID="ID_1420227071" MODIFIED="1331870110652" STYLE="fork" TEXT="Generating load">
@@ -186,14 +186,14 @@
 <edge COLOR="#808080" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="monofur" SIZE="12"/>
 </node>
-<node BACKGROUND_COLOR="#ffffff" COLOR="#000000" CREATED="1331867668946" FOLDED="true" ID="ID_125847630" MODIFIED="1331870583539" POSITION="left" STYLE="fork" TEXT="Links">
+<node BACKGROUND_COLOR="#ffffff" COLOR="#000000" CREATED="1331867668946" ID="ID_125847630" MODIFIED="1331908142916" POSITION="left" STYLE="fork" TEXT="Links">
 <edge COLOR="#808080" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="monofur" SIZE="12"/>
 <node BACKGROUND_COLOR="#ffffff" COLOR="#000000" CREATED="1331867668946" ID="ID_448093243" LINK="http://grinder.sourceforge.net" MODIFIED="1331870556966" STYLE="fork" TEXT="The Grinder">
 <edge COLOR="#808080" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="monofur" SIZE="12"/>
 </node>
-<node BACKGROUND_COLOR="#ffffff" COLOR="#000000" CREATED="1331867668946" ID="ID_1316479072" MODIFIED="1331870490157" STYLE="fork" TEXT="Demo code">
+<node BACKGROUND_COLOR="#ffffff" COLOR="#000000" CREATED="1331867668946" ID="ID_1316479072" LINK="https://github.com/locopati/load-testing-with-clojure" MODIFIED="1331908154805" STYLE="fork" TEXT="Demo code">
 <edge COLOR="#808080" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="monofur" SIZE="12"/>
 </node>
