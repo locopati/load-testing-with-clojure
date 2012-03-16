@@ -2,32 +2,32 @@
 Demo code for a talk at Clojure/West 2012 called <i>Load Testing with Clojure</i>. The demo code consists of a simplistic mathematics server built with [Compojure](https://github.com/weavejester/compojure) and [Incanter](http://incanter.org/), some test functions using [clojure.test](http://richhickey.github.com/clojure/clojure.test-api.html), and [Grinder](http://grinder.sourceforge.net/) test scripts.
 
 ## The Math Server
-<i>To start the server</i>
+<b>To start the server</b>
 
 lein ring server-headless 9999
 
-<i>To make requests to the server</i>
+<b>To make requests to the server</b>
 
 http://localhost:9999/1%20+%202
 
 (the expression must have spaces around the operator - some browsers will automatically convert a space to %20)
 
-<i>Where is the server code?</i>
+<b>Where is the server code?</b>
 
 src/math/core.clj
 
 test/math/test.clj
 
 ## The Grinder
-<i>To start an agent</i>
+<b>To start an agent</b>
 
 bin/grinder agent start [optional number of agents to start - defaults to 1]
 
-<i>To start the console</i>
+<b>To start the console</b>
 
 bin/grinder console start
 
-<i>To run tests</i>
+<b>To run tests</b>
 
 In the Script tab, set the root directory to the $PROJECT_HOME/grinder
 
